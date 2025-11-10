@@ -1,4 +1,4 @@
-package com
+package com.hugin_munin
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.Serializable

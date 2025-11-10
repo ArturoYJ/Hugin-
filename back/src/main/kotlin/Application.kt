@@ -1,4 +1,4 @@
-package com
+package com.hugin_munin
 
 import io.ktor.server.application.*
 
@@ -9,8 +9,8 @@ fun main(args: Array<String>) {
 fun Application.module() {
     configureSerialization()
     configureDatabases()
-    configureSecurity()
-    configureHTTP()
     configureMonitoring()
+    configureHTTP()
+    configureSecurity()
     configureRouting()
 }

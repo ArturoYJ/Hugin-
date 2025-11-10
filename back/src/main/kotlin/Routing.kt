@@ -1,4 +1,4 @@
-package com
+package com.hugin_munin
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm

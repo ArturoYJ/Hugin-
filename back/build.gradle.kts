@@ -4,7 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.plugin.serialization)
 }
 
-group = "com"
+group = "com.hugin_munin"
 version = "0.0.1"
 
 application {
@@ -19,12 +19,12 @@ dependencies {
     implementation(libs.h2)
     implementation(libs.exposed.core)
     implementation(libs.exposed.jdbc)
-    implementation(libs.ktor.server.auth)
-    implementation(libs.ktor.server.auth.jwt)
+    implementation(libs.ktor.server.call.logging)
     implementation(libs.ktor.server.host.common)
     implementation(libs.ktor.server.status.pages)
     implementation(libs.ktor.server.cors)
-    implementation(libs.ktor.server.call.logging)
+    implementation(libs.ktor.server.auth)
+    implementation(libs.ktor.server.auth.jwt)
     implementation(libs.ktor.server.netty)
     implementation(libs.logback.classic)
     implementation(libs.ktor.server.config.yaml)

@@ -1,4 +1,4 @@
-rootProject.name = "hugin_munin"
+rootProject.name = "backend"
 
 dependencyResolutionManagement {
     repositories {
