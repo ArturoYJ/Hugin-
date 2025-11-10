@@ -1,4 +1,4 @@
-rootProject.name = "hugin_munin_api"
+rootProject.name = "hugin_munin"
 
 dependencyResolutionManagement {
     repositories {
