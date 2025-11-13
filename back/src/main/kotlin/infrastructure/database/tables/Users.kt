@@ -2,8 +2,8 @@ package com.hugin_munin.infrastructure.database.tables
 
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.ReferenceOption
-import org.jetbrains.exposed.sql.javatime.CurrentTimestamp
 import org.jetbrains.exposed.sql.javatime.timestamp
+import org.jetbrains.exposed.sql.javatime.CurrentTimestamp
 
 object Users : IntIdTable("usuario", "id_usuario") {
     val roleId = reference("id_rol", Roles, onDelete = ReferenceOption.RESTRICT)
