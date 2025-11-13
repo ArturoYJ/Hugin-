@@ -1,20 +1,27 @@
 package com.hugin_munin.infrastructure.plugins
 
-import io.ktor.http.*
+import com.hugin_munin.infrastructure.database.DatabaseFactory.dbQuery
+import com.hugin_munin.infrastructure.database.tables.Users
 import io.ktor.server.application.*
-import io.ktor.server.plugins.statuspages.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import org.jetbrains.exposed.sql.selectAll
 
 fun Application.configureRouting() {
-    install(StatusPages) {
-        exception<Throwable> { call, cause ->
-            call.respondText(text = "500: $cause" , status = HttpStatusCode.InternalServerError)
-        }
-    }
     routing {
         get("/") {
-            call.respondText("Hello World!")
+            call.respondText("Hugin & Munin API - Running")
+        }
+
+        get("/health") {
+            call.respondText("OK")
+        }
+
+        get("/test-db") {
+            val userCount = dbQuery {
+                Users.selectAll().count()
+            }
+            call.respondText("Database connected! Users in DB: $userCount")
         }
     }
 }
