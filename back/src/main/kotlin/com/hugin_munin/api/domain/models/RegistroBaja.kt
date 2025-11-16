@@ -1,0 +1,17 @@
+package com.hugin_munin.api.domain.models
+
+import kotlinx.datetime.Clock
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class RegistroBaja(
+    val id: Int? = null,
+    val especimenId: Int,
+    val causaBajaId: Int,
+    val responsableId: Int,
+    val fechaBaja: LocalDate = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date,
+    val observacion: String?
+)
