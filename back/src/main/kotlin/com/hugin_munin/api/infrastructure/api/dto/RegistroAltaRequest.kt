@@ -11,11 +11,11 @@ data class RegistroAltaRequest(
     val fechaIngreso: LocalDate,
     val procedencia: String?,
     val observacion: String?,
-    val traslado: TrasladoRequest
+    val traslado: TrasladoInfoRequest
 )
 
 @Serializable
-data class TrasladoRequest(
+data class TrasladoInfoRequest(
     val areaOrigen: String,
     val areaDestino: String,
     val ubicacionOrigen: String,
