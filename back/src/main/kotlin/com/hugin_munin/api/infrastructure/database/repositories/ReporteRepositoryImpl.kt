@@ -101,4 +101,18 @@ class ReporteRepositoryImpl : ReporteRepository {
             }
             .singleOrNull()
     }
+
+    override suspend fun saveClinico(clinico: ReporteClinico): Unit = dbQuery {
+        ReporteClinicoTable.insert {
+            it[reporteId] = clinico.reporteId
+            it[diagnostico] = clinico.diagnostico
+            it[tratamiento] = clinico.tratamiento
+            it[medicamentos] = clinico.medicamentos
+            it[dosis] = clinico.dosis
+            it[frecuenciaTratamiento] = clinico.frecuenciaTratamiento
+            it[fechaProximoControl] = clinico.fechaProximoControl
+            it[estadoSalud] = clinico.estadoSalud
+        }
+    }
+    e
 }

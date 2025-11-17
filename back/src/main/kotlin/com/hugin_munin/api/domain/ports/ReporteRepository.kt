@@ -14,4 +14,5 @@ interface ReporteRepository {
     suspend fun findByEspecimenId(especimenId: Int): List<Reporte>
     suspend fun update(id: Int, reporte: Reporte): Reporte?
     suspend fun delete(id: Int): Boolean
+    suspend fun saveClinico(clinico: ReporteClinico)
 }
