@@ -5,7 +5,7 @@ import kotlinx.datetime.LocalDate
 
 @Serializable
 data class ReporteClinico(
-    val reporteId: Int, // ID heredado
+    val reporteId: Int,
     val diagnostico: String,
     val tratamiento: String?,
     val medicamentos: String?,

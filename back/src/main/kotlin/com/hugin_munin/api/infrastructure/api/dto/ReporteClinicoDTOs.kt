@@ -5,6 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ReporteClinicoRequest(
+
     val especimenId: Int,
     val responsableId: Int,
     val asunto: String,
@@ -17,18 +18,32 @@ data class ReporteClinicoRequest(
     val dosis: String?,
     val frecuenciaTratamiento: String?,
     val fechaProximoControl: LocalDate?,
-    val estadoSalud: String
+    val estadoSalud: String?
 )
 
 @Serializable
 data class ReporteClinicoResponse(
-    val id: Int,
+    val id: Int, // ID del reporte generado
     val especimenId: Int,
     val responsableId: Int,
     val asunto: String,
     val contenido: String,
     val fechaReporte: LocalDate,
-    // Datos Clínicos
     val diagnostico: String,
+    val estadoSalud: String?
+)
+
+@Serializable
+data class ReporteClinicoUpdateRequest(
+
+    val asunto: String?,
+    val contenido: String?,
+    val fechaReporte: LocalDate?,
+    val diagnostico: String?,
+    val tratamiento: String?,
+    val medicamentos: String?,
+    val dosis: String?,
+    val frecuenciaTratamiento: String?,
+    val fechaProximoControl: LocalDate?,
     val estadoSalud: String?
 )

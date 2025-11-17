@@ -3,11 +3,15 @@ package com.hugin_munin.api.infrastructure.database.repositories
 import com.hugin_munin.api.domain.models.Reporte
 import com.hugin_munin.api.domain.models.ReporteTraslado
 import com.hugin_munin.api.domain.models.OrigenAlta
+import com.hugin_munin.api.domain.models.ReporteClinico
 import com.hugin_munin.api.domain.ports.ReporteRepository
+import com.hugin_munin.api.infrastructure.api.dto.ReporteClinicoResponse
+import com.hugin_munin.api.infrastructure.api.dto.ReporteClinicoUpdateRequest
 import com.hugin_munin.api.infrastructure.database.DatabaseFactory.dbQuery
 import com.hugin_munin.api.infrastructure.database.schemas.ReporteTable
 import com.hugin_munin.api.infrastructure.database.schemas.ReporteTrasladoTable
 import com.hugin_munin.api.infrastructure.database.schemas.OrigenAltaTable
+import com.hugin_munin.api.infrastructure.database.schemas.ReporteClinicoTable
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 
@@ -104,7 +108,7 @@ class ReporteRepositoryImpl : ReporteRepository {
 
     override suspend fun saveClinico(clinico: ReporteClinico): Unit = dbQuery {
         ReporteClinicoTable.insert {
-            it[reporteId] = clinico.reporteId
+            it[idReporte] = clinico.reporteId
             it[diagnostico] = clinico.diagnostico
             it[tratamiento] = clinico.tratamiento
             it[medicamentos] = clinico.medicamentos
@@ -114,5 +118,44 @@ class ReporteRepositoryImpl : ReporteRepository {
             it[estadoSalud] = clinico.estadoSalud
         }
     }
-    e
+
+    override suspend fun findClinicoById(id: Int): ReporteClinicoResponse? = dbQuery {
+        (ReporteTable innerJoin ReporteClinicoTable)
+            .select { ReporteTable.id eq id }
+            .map { row ->
+                ReporteClinicoResponse(
+                    id = row[ReporteTable.id],
+                    especimenId = row[ReporteTable.especimenId],
+                    responsableId = row[ReporteTable.responsableId],
+                    asunto = row[ReporteTable.asunto],
+                    contenido = row[ReporteTable.contenido],
+                    fechaReporte = row[ReporteTable.fechaReporte],
+                    diagnostico = row[ReporteClinicoTable.diagnostico],
+                    estadoSalud = row[ReporteClinicoTable.estadoSalud]
+                )
+            }
+            .singleOrNull()
+    }
+
+    override suspend fun updateClinico(id: Int, clinico: ReporteClinicoUpdateRequest): Boolean = dbQuery {
+
+        // actualiza tabla padre
+        ReporteTable.update({ ReporteTable.id eq id }) {
+            clinico.asunto?.let { v -> it[asunto] = v }
+            clinico.contenido?.let { v -> it[contenido] = v }
+            clinico.fechaReporte?.let { v -> it[fechaReporte] = v }
+        }
+
+        val filasHijas = ReporteClinicoTable.update({ ReporteClinicoTable.idReporte eq id }) {
+            clinico.diagnostico?.let { v -> it[diagnostico] = v }
+            clinico.tratamiento?.let { v -> it[tratamiento] = v }
+            clinico.medicamentos?.let { v -> it[medicamentos] = v }
+            clinico.dosis?.let { v -> it[dosis] = v }
+            clinico.frecuenciaTratamiento?.let { v -> it[frecuenciaTratamiento] = v }
+            clinico.fechaProximoControl?.let { v -> it[fechaProximoControl] = v }
+            clinico.estadoSalud?.let { v -> it[estadoSalud] = v }
+        }
+
+        filasHijas > 0
+    }
 }

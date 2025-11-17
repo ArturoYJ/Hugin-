@@ -15,8 +15,9 @@ import com.hugin_munin.api.domain.ports.EspecimenRepository
 import com.hugin_munin.api.infrastructure.api.routes.registroBajaRouting
 import kotlinx.serialization.Serializable
 import org.koin.ktor.ext.inject
-import com.hugin_munin.api.infrastructure.api.routes.reporteRouting // Importar
-import com.hugin_munin.api.application.services.ReporteService // Importar
+import com.hugin_munin.api.infrastructure.api.routes.reporteRouting
+import com.hugin_munin.api.application.services.ReporteService
+import com.hugin_munin.api.infrastructure.api.routes.reporteClinicoRouting
 
 @Serializable
 data class ErrorResponse(val error: String, val message: String)
@@ -42,9 +43,12 @@ fun Application.configureRouting() {
         get("/") { call.respondText("Hello World!") }
         get("/health") { call.respond(mapOf("status" to "OK")) }
 
-        especimenRouting(especimenService, especimenQueryService, registroAltaService, especimenRepository)
-        registroAltaRouting(registroAltaService)
-        registroBajaRouting(registroBajaService)
-        reporteRouting(reporteService)
+        route("/hm") {
+            especimenRouting(especimenService, especimenQueryService, registroAltaService, especimenRepository)
+            registroAltaRouting(registroAltaService)
+            registroBajaRouting(registroBajaService)
+            reporteRouting(reporteService)
+            reporteClinicoRouting(reporteService)
+        }
     }
 }
