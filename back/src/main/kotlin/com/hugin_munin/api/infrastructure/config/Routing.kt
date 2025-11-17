@@ -42,9 +42,10 @@ fun Application.configureRouting() {
         get("/") { call.respondText("Hello World!") }
         get("/health") { call.respond(mapOf("status" to "OK")) }
 
-        especimenRouting(especimenService, especimenQueryService, registroAltaService, especimenRepository)
-        registroAltaRouting(registroAltaService)
-        registroBajaRouting(registroBajaService)
-        reporteRouting(reporteService)
-    }
+        route("/hm") {
+            especimenRouting(especimenService, especimenQueryService, registroAltaService, especimenRepository)
+            registroAltaRouting(registroAltaService)
+            registroBajaRouting(registroBajaService)
+            reporteRouting(reporteService) // Endpoint de reportes
+        }    }
 }
