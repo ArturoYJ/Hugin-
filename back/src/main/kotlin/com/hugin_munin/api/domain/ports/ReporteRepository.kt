@@ -4,6 +4,7 @@ import com.hugin_munin.api.domain.models.Reporte
 import com.hugin_munin.api.domain.models.ReporteTraslado
 
 interface ReporteRepository {
+
     suspend fun findById(id: Int): Reporte?
     suspend fun save(reporte: Reporte): Reporte
     suspend fun saveTraslado(traslado: ReporteTraslado)
@@ -14,4 +15,5 @@ interface ReporteRepository {
     suspend fun findByEspecimenId(especimenId: Int): List<Reporte>
     suspend fun update(id: Int, reporte: Reporte): Reporte?
     suspend fun delete(id: Int): Boolean
+
 }

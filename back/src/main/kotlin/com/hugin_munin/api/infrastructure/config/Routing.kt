@@ -20,6 +20,7 @@ import com.hugin_munin.api.application.services.ReporteService
 import com.hugin_munin.api.infrastructure.api.routes.trasladoRouting
 import com.hugin_munin.api.application.services.TrasladoService
 
+
 @Serializable
 data class ErrorResponse(val error: String, val message: String)
 
@@ -49,7 +50,8 @@ fun Application.configureRouting() {
             especimenRouting(especimenService, especimenQueryService, registroAltaService, especimenRepository)
             registroAltaRouting(registroAltaService)
             registroBajaRouting(registroBajaService)
-            reporteRouting(reporteService) // Endpoint de reportes
+            reporteRouting(reporteService)
             trasladoRouting(trasladoService)
-        }    }
+        }
+    }
 }
