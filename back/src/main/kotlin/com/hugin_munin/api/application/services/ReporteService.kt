@@ -10,13 +10,12 @@ import com.hugin_munin.api.infrastructure.api.dto.ReporteClinicoRequest
 import com.hugin_munin.api.infrastructure.api.dto.ReporteClinicoResponse
 import com.hugin_munin.api.infrastructure.api.dto.ReporteClinicoUpdateRequest
 
-class ReporteService( private val reporteRepository: ReporteRepository ) {
-
-    private val TIPO_REPORTE_CLINICO_ID = 1
-
+// Solución: Una sola declaración de clase
 class ReporteService(
     private val reporteRepository: ReporteRepository
 ) {
+
+    private val TIPO_REPORTE_CLINICO_ID = 1
 
     suspend fun getAllReportes(): List<ReporteResponse> {
         return reporteRepository.findAll().map { it.toResponse() }
