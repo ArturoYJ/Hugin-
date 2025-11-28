@@ -17,7 +17,6 @@ import kotlinx.serialization.Serializable
 import org.koin.ktor.ext.inject
 import com.hugin_munin.api.infrastructure.api.routes.reporteRouting
 import com.hugin_munin.api.application.services.ReporteService
-import com.hugin_munin.api.infrastructure.api.routes.reporteClinicoRouting
 
 @Serializable
 data class ErrorResponse(val error: String, val message: String)
@@ -48,7 +47,6 @@ fun Application.configureRouting() {
             registroAltaRouting(registroAltaService)
             registroBajaRouting(registroBajaService)
             reporteRouting(reporteService)
-            reporteClinicoRouting(reporteService)
         }
     }
 }

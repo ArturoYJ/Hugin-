@@ -2,9 +2,6 @@ package com.hugin_munin.api.domain.ports
 import com.hugin_munin.api.domain.models.OrigenAlta
 import com.hugin_munin.api.domain.models.Reporte
 import com.hugin_munin.api.domain.models.ReporteTraslado
-import com.hugin_munin.api.domain.models.ReporteClinico
-import com.hugin_munin.api.infrastructure.api.dto.ReporteClinicoResponse
-import com.hugin_munin.api.infrastructure.api.dto.ReporteClinicoUpdateRequest
 
 interface ReporteRepository {
 
@@ -19,7 +16,4 @@ interface ReporteRepository {
     suspend fun update(id: Int, reporte: Reporte): Reporte?
     suspend fun delete(id: Int): Boolean
 
-    suspend fun saveClinico(clinico: ReporteClinico)
-    suspend fun findClinicoById(id: Int): ReporteClinicoResponse?
-    suspend fun updateClinico(id: Int, clinico: ReporteClinicoUpdateRequest): Boolean
 }
