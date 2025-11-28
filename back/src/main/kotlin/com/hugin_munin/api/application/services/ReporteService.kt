@@ -1,10 +1,18 @@
 package com.hugin_munin.api.application.services
 
 import com.hugin_munin.api.domain.models.Reporte
+import com.hugin_munin.api.domain.models.ReporteClinico
 import com.hugin_munin.api.domain.ports.ReporteRepository
 import com.hugin_munin.api.infrastructure.api.dto.ReporteRequest
 import com.hugin_munin.api.infrastructure.api.dto.ReporteResponse
 import com.hugin_munin.api.infrastructure.api.dto.ReporteUpdateRequest
+import com.hugin_munin.api.infrastructure.api.dto.ReporteClinicoRequest
+import com.hugin_munin.api.infrastructure.api.dto.ReporteClinicoResponse
+import com.hugin_munin.api.infrastructure.api.dto.ReporteClinicoUpdateRequest
+
+class ReporteService( private val reporteRepository: ReporteRepository ) {
+
+    private val TIPO_REPORTE_CLINICO_ID = 1
 
 class ReporteService(
     private val reporteRepository: ReporteRepository
@@ -49,6 +57,52 @@ class ReporteService(
 
     suspend fun deleteReporte(id: Int): Boolean {
         return reporteRepository.delete(id)
+    }
+
+    suspend fun createReporteClinico(request: ReporteClinicoRequest): ReporteClinicoResponse {
+
+        val reporteBase = Reporte(
+            tipoReporteId = TIPO_REPORTE_CLINICO_ID,
+            especimenId = request.especimenId,
+            responsableId = request.responsableId,
+            asunto = request.asunto,
+            contenido = request.contenido,
+            fechaReporte = request.fechaReporte
+        )
+
+        val reporteGuardado = reporteRepository.save(reporteBase)
+
+        val reporteClinico = ReporteClinico(
+            reporteId = reporteGuardado.id!!,
+            diagnostico = request.diagnostico,
+            tratamiento = request.tratamiento,
+            medicamentos = request.medicamentos,
+            dosis = request.dosis,
+            frecuenciaTratamiento = request.frecuenciaTratamiento,
+            fechaProximoControl = request.fechaProximoControl,
+            estadoSalud = request.estadoSalud
+        )
+
+        reporteRepository.saveClinico(reporteClinico)
+
+        return ReporteClinicoResponse(
+            id = reporteGuardado.id,
+            especimenId = reporteGuardado.especimenId!!,
+            responsableId = reporteGuardado.responsableId,
+            asunto = reporteGuardado.asunto,
+            contenido = reporteGuardado.contenido,
+            fechaReporte = reporteGuardado.fechaReporte,
+            diagnostico = reporteClinico.diagnostico,
+            estadoSalud = reporteClinico.estadoSalud
+        )
+    }
+
+    suspend fun getReporteClinicoById(id: Int): ReporteClinicoResponse? {
+        return reporteRepository.findClinicoById(id)
+    }
+
+    suspend fun updateReporteClinico(id: Int, request: ReporteClinicoUpdateRequest): Boolean {
+        return reporteRepository.updateClinico(id, request)
     }
 
     private fun Reporte.toResponse() = ReporteResponse(
