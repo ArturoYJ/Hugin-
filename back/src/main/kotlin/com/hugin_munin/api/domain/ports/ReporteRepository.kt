@@ -9,4 +9,9 @@ interface ReporteRepository {
     suspend fun saveTraslado(traslado: ReporteTraslado)
     suspend fun findTrasladoByReporteId(reporteId: Int): ReporteTraslado?
     suspend fun findOrigenAltaById(id: Int): OrigenAlta?
+
+    suspend fun findAll(): List<Reporte>
+    suspend fun findByEspecimenId(especimenId: Int): List<Reporte>
+    suspend fun update(id: Int, reporte: Reporte): Reporte?
+    suspend fun delete(id: Int): Boolean
 }
