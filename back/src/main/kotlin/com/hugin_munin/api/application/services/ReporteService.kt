@@ -14,6 +14,10 @@ class ReporteService( private val reporteRepository: ReporteRepository ) {
 
     private val TIPO_REPORTE_CLINICO_ID = 1
 
+class ReporteService(
+    private val reporteRepository: ReporteRepository
+) {
+
     suspend fun getAllReportes(): List<ReporteResponse> {
         return reporteRepository.findAll().map { it.toResponse() }
     }
