@@ -7,6 +7,7 @@ import com.hugin_munin.api.application.services.EspecimenQueryService
 import com.hugin_munin.api.application.services.RegistroAltaService
 import com.hugin_munin.api.application.services.RegistroBajaService
 import com.hugin_munin.api.application.services.ReporteService
+import com.hugin_munin.api.application.services.TrasladoService
 
 import org.koin.dsl.module
 
@@ -55,6 +56,13 @@ val appModule = module {
     single {
         ReporteService(
             reporteRepository = get()
+        )
+    }
+
+    single {
+        TrasladoService(
+            reporteRepository = get(),
+            especimenRepository = get()
         )
     }
 

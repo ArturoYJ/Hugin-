@@ -17,6 +17,9 @@ import kotlinx.serialization.Serializable
 import org.koin.ktor.ext.inject
 import com.hugin_munin.api.infrastructure.api.routes.reporteRouting
 import com.hugin_munin.api.application.services.ReporteService
+import com.hugin_munin.api.infrastructure.api.routes.trasladoRouting
+import com.hugin_munin.api.application.services.TrasladoService
+
 
 @Serializable
 data class ErrorResponse(val error: String, val message: String)
@@ -28,6 +31,7 @@ fun Application.configureRouting() {
     val especimenRepository by inject<EspecimenRepository>()
     val registroBajaService by inject<RegistroBajaService>()
     val reporteService by inject<ReporteService>()
+    val trasladoService by inject<TrasladoService>()
 
     install(StatusPages) {
         exception<Throwable> { call, cause ->
@@ -47,6 +51,7 @@ fun Application.configureRouting() {
             registroAltaRouting(registroAltaService)
             registroBajaRouting(registroBajaService)
             reporteRouting(reporteService)
+            trasladoRouting(trasladoService)
         }
     }
 }
